@@ -133,12 +133,13 @@ The idea comes from Claude Code's built-in Learning output style (`/output-style
 /practice landing section 3: six cards move right to left on scroll with GSAP ScrollTrigger
 ```
 
-1. Claude asks a few short questions, then shows a plan of 3 to 6 steps. Each step has a goal and a way to check it, but no code.
+1. Claude finds the code itself (it never asks you which file to open). For a tiny change it skips the plan: it shows where the code is, asks one thinking question, you edit, it reviews. For a bigger task it shows a plan of 3 to 6 steps, each with a goal and a way to check it, but no code.
 2. For each step it asks how you would approach it, and you write the code in your editor.
 3. When you say "done", it reads that file and points to the problem, not the fix. It asks you to explain a line in your own words.
 4. If you are stuck it climbs a ladder: a question, then the concept and a docs link, then the structure in words, then a tiny example on a different case. The solution comes only if you ask.
 5. Before it hints about a library such as GSAP, it checks the real docs or your installed version.
-6. At the end it lists the gaps it saw and suggests `/learn <concept>` for each, then logs them in the same file as `/learn`.
+6. When the task works, it asks one or two growth questions (edge cases, tests, cost, accessibility, simpler options), the kind a mid or senior developer asks. How much help you get is set by `Guidance` in `~/learning/PROFILE.md`: `guided`, `standard` or `spartan`.
+7. At the end it lists the gaps it saw and suggests `/learn <concept>` for each, then logs them in the same file as `/learn`.
 
 A good rhythm: build with `/practice`, then close the gaps with `/learn`.
 
