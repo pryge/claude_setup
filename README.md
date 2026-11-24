@@ -13,14 +13,42 @@ It is built for a junior full-stack developer (TypeScript, React/Next.js, NestJS
 
 You need [Claude Code](https://claude.com/claude-code) and `git`.
 
+One line, on any machine:
+
 ```bash
-git clone https://github.com/pryge/claude_setup.git ~/Programming/claude-setup
-~/Programming/claude-setup/scripts/bootstrap.sh
+curl -fsSL https://raw.githubusercontent.com/pryge/claude_setup/main/install.sh | bash
 ```
 
-Open a new Claude Code session. Type `/` and you should see `learn`, `tdd`, `diagnosing-bugs` and the rest of the list below.
+Or step by step (read the script first if you like):
 
-What the script does: it creates symlinks from `~/.claude/skills/<name>` to the folders in this repo. It never overwrites anything that already exists. Because they are symlinks, `git pull` in this repo updates your skills.
+```bash
+git clone https://github.com/pryge/claude_setup.git ~/claude-setup
+~/claude-setup/scripts/bootstrap.sh
+```
+
+Open a new Claude Code session. Type `/` and you should see `learn`, `practice`, `tdd`, `diagnosing-bugs` and the rest of the list below.
+
+What it does:
+
+- Creates symlinks from `~/.claude/skills/<name>` to the folders in this repo. It never overwrites anything that exists, so it is safe to run twice.
+- Creates `~/learning/PROFILE.md` (language, level, stack, goal) if you do not have one. `/learn` and `/practice` read it, so you change the language or stack there, not in the skills.
+- Does not touch your projects or `settings.json`.
+
+Different folder: `CLAUDE_SETUP_DIR=~/somewhere bash install.sh`. Your own fork: `CLAUDE_SETUP_REPO=<your git url>`. Do not move the folder afterwards, the symlinks point to it; if you do, run `scripts/bootstrap.sh` again.
+
+**Private repo.** If the repo is private, `curl` and `git clone` need you to be signed in to GitHub on that machine (a personal access token over HTTPS, or an SSH key). On a new laptop either sign in first or make the repo public. Nothing in it is secret, but that is your call.
+
+### Update
+
+```bash
+cd ~/claude-setup && git pull && scripts/bootstrap.sh
+```
+
+Existing skills update through the symlinks. `bootstrap.sh` links any new ones.
+
+### Use it in a project you already have
+
+Nothing to install per project: the skills are global. Open the project in Claude Code and type `/learn` or `/practice`. Optionally add a short `CLAUDE.md` with `scripts/init-project.sh <project folder>` (see below). It will not overwrite yours.
 
 ## Try it
 
