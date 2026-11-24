@@ -235,6 +235,8 @@ This was checked against each repository's README, manifests and hooks. A few fi
 
 ## Credits and licenses
 
+My own files (`skills/learn`, `skills/practice`, scripts, templates, docs) are MIT, see [LICENSE](LICENSE). Everything under `vendor/` keeps its original license and copyright, listed below.
+
 - [mattpocock/skills](https://github.com/mattpocock/skills), MIT. License copied to `vendor/mattpocock-skills/LICENSE`.
 - [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill), MIT. License copied to `vendor/ui-ux-pro-max/LICENSE`.
 - [Egonex-AI/Understand-Anything](https://github.com/Egonex-AI/Understand-Anything), MIT (optional, not copied).
