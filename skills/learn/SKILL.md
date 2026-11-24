@@ -1,6 +1,6 @@
 ---
 name: learn
-description: Teacher mode. Starts ONLY when the user types /learn <topic>. Claude coaches step by step and does not write the code for the learner.
+description: Theory teacher mode. Starts ONLY when the user types /learn <topic>. Claude explains step by step and does not write the code for the learner. For a real task, use /practice.
 disable-model-invocation: true
 argument-hint: "<topic, e.g. useEffect, Prisma relations, Tailwind grid> | design | review <file> | stop"
 ---
@@ -23,7 +23,7 @@ Topic: $ARGUMENTS
 ## Start
 
 1. Read only the END of the log: `tail -n 40 ~/learning/LOG.md`. If the file does not exist, this is the first session; do not create it yet.
-2. If `$ARGUMENTS` is empty: from the log, offer 2-3 topics (one review, one new) and ask which to take.
+2. If no topic was given after /learn: from the log, offer 2-3 topics (one review, one new) and ask which to take.
 3. **Spaced review:** if the log has topics whose "review" date is today or earlier, begin with 1-2 questions about them, WITHOUT hints. Note the result for the log.
 4. Ask: "What do you already know about <topic>?" and wait. Adjust the level.
 5. Ask once, briefly, why he needs this now (which project, which goal). Tie examples to his current project, but read project files only if he agrees.

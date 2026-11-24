@@ -46,7 +46,8 @@ Skills are small instruction files. Claude loads a skill's short description at 
 
 | Skill | What it does | How it starts |
 |---|---|---|
-| `learn` | Teacher mode, described below | You type `/learn` (Claude never starts it on its own) |
+| `learn` | Theory teacher: explains one idea at a time, asks questions, gives small exercises | You type `/learn` (Claude never starts it on its own) |
+| `practice` | Mentor for a real task: splits it into steps and gives hints instead of code | You type `/practice` (manual only) |
 | `tdd` | Test-first development, red-green-refactor | Automatic, when you ask for test-first work |
 | `diagnosing-bugs` | A step-by-step loop for finding the cause of a bug | Automatic, when something is broken or slow |
 | `codebase-design` | Vocabulary for splitting code into modules with simple interfaces | Automatic, when you design or refactor a module |
@@ -95,6 +96,23 @@ The review date is how spaced repetition works here: the next `/learn` brings th
 The skill's instructions are in English; Claude talks to you in Ukrainian. To change that, edit the "Language" line in [skills/learn/SKILL.md](skills/learn/SKILL.md).
 
 The idea comes from Claude Code's built-in Learning output style (`/output-style`), which leaves `TODO(human)` gaps for you, plus ideas from [qtsone/learning](https://github.com/qtsone/learning) and mattpocock's `teach`.
+
+## Practicing with `/practice`
+
+`/learn` teaches an idea. `/practice` helps you build a real thing without AI writing it for you.
+
+```text
+/practice landing section 3: six cards move right to left on scroll with GSAP ScrollTrigger
+```
+
+1. Claude asks a few short questions, then shows a plan of 3 to 6 steps. Each step has a goal and a way to check it, but no code.
+2. For each step it asks how you would approach it, and you write the code in your editor.
+3. When you say "done", it reads that file and points to the problem, not the fix. It asks you to explain a line in your own words.
+4. If you are stuck it climbs a ladder: a question, then the concept and a docs link, then the structure in words, then a tiny example on a different case. The solution comes only if you ask.
+5. Before it hints about a library such as GSAP, it checks the real docs or your installed version.
+6. At the end it lists the gaps it saw and suggests `/learn <concept>` for each, then logs them in the same file as `/learn`.
+
+A good rhythm: build with `/practice`, then close the gaps with `/learn`.
 
 ## Start a new project
 
@@ -146,7 +164,7 @@ Its hooks do nothing unless a project has `.understand-anything/config.json` wit
 ## Repository layout
 
 ```text
-skills/learn/                 my own skill
+skills/learn/, skills/practice/   my own skills
 vendor/mattpocock-skills/     10 skills copied from mattpocock/skills (MIT)
 vendor/ui-ux-pro-max/         7 skills copied from nextlevelbuilder/ui-ux-pro-max-skill (MIT)
 templates/project/            CLAUDE.md for new projects
