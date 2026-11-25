@@ -4,7 +4,6 @@
 - Stack: TypeScript, React/Next.js, NestJS, Prisma, PostgreSQL, Tailwind, Zustand, Three.js, Jest, Cypress.
 - Do not guess: if unsure, check the code or the docs.
 - Do not change files outside the request. No commit/push unless asked.
-- Teacher mode starts only with /learn.
 
 ## Project commands (fill in)
 - Run:
