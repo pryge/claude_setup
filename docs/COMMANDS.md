@@ -1,245 +1,246 @@
-# Команди і скіли: довідник
+# Commands and skills: reference
 
-Як це читати:
+How to read this:
 
-- **Команда** — те, що вводиш у Claude Code, наприклад `/tdd`.
-- **Скіл** — набір інструкцій. Claude може використати його сам, коли задача підходить до опису. Тоді команда не потрібна.
-- **Вручну** — скіл запускається тільки командою, Claude сам його не обере.
-- **Авто** — Claude сам обере скіл за описом. Можна викликати і вручну.
-- **Хук** — код, який запускається сам на подію (старт сесії, правка файлу). Його не викликаєш.
+- **Command**: what you type in Claude Code, for example `/tdd`.
+- **Skill**: a set of instructions. Claude can use a skill by itself when your request matches its description. In that case you do not need to type anything.
+- **Manual**: the skill runs only when you type its command. Claude will not pick it by itself.
+- **Auto**: Claude picks the skill from its description. You can also type it yourself.
+- **Hook**: code that runs automatically on an event (session start, file edit). You do not call it.
+- **Command only**: the skill is never picked by Claude, even if you ask in plain words. You must type it.
 
-Тексти описів скорочені. Якщо команда не знайдена, введи `/`, і список покаже, що є у твоїй сесії.
+Descriptions are shortened. If you are not sure what exists, type `/` and the list shows the commands available in your session.
 
 ---
 
-## 1. Вбудовані команди Claude Code
+## 1. Built-in Claude Code commands
 
-Це команди самого Claude Code (термінал і режим Code). Вони не є плагінами.
+These are commands of Claude Code itself (terminal and Code mode), not plugins.
 
-| Команда | Що робить |
+| Command | What it does |
 |---|---|
-| `/help` | Показує довідку по командах |
-| `/clear` | Очищає розмову, починає з нуля |
-| `/compact` | Стискає розмову, щоб звільнити контекст, але зберегти суть |
-| `/resume` | Відкриває попередню сесію, щоб продовжити |
-| `/model` | Вибір моделі (наприклад, Sonnet або Opus) |
-| `/config` | Відкриває налаштування |
-| `/permissions` | Які дії Claude може робити без запиту |
-| `/plugin` | Список плагінів, увімкнення і вимкнення, встановлення |
-| `/mcp` | Підключені сервери (MCP), наприклад Context7 |
-| `/hooks` | Перегляд хуків, які запускаються автоматично |
-| `/memory` | Редагування файлів пам'яті, таких як CLAUDE.md |
-| `/init` | Створює `CLAUDE.md` для поточного проєкту, аналізуючи код |
-| `/cost` | Скільки токенів і грошей витрачено в сесії |
-| `/status` | Стан сесії, версія, підключення |
-| `/doctor` | Перевірка, чи все встановлено правильно |
-| `/agents` | Перегляд і створення субагентів |
-| `/exit` | Вихід |
+| `/help` | Shows help for commands |
+| `/clear` | Clears the conversation and starts fresh |
+| `/compact` | Shortens the conversation to free up context, keeping the important parts |
+| `/resume` | Opens an earlier session to continue it |
+| `/model` | Chooses the model (for example Sonnet or Opus) |
+| `/config` | Opens settings |
+| `/permissions` | What Claude may do without asking |
+| `/plugin` | Lists plugins; turn them on and off; install new ones |
+| `/mcp` | Connected servers (MCP), for example Context7 |
+| `/hooks` | Shows the hooks that run automatically |
+| `/memory` | Edits memory files such as CLAUDE.md |
+| `/init` | Creates a `CLAUDE.md` for the current project by reading the code |
+| `/cost` | How many tokens and how much money the session used |
+| `/status` | Session state, version, connections |
+| `/doctor` | Checks that the installation works |
+| `/agents` | Views and creates subagents |
+| `/exit` | Quits |
 
 ---
 
-## 2. Вбудовані скіли Claude (за замовчуванням)
+## 2. Built-in Claude skills (default)
 
-Ці скіли є у твоєму акаунті. Частина з них потребує входу в сервіс (наприклад, Google).
+These skills come with your account. Some need you to sign in to a service (for example Google).
 
-| Скіл | Тип | Що робить | Приклад |
+| Skill | Type | What it does | Example |
 |---|---|---|---|
-| `deep-research` | Авто | Досліджує тему з багатьох джерел і пише звіт | «Зроби дослідження ринку меблевих сайтів у Польщі» |
-| `docs` | Авто | Створює і редагує документи, які можна ділити і коментувати | «Зроби документ зі специфікацією фічі» |
-| `docx` | Авто | Створює і редагує файли Word (.docx) | «Зроби договір у форматі Word» |
-| `pdf` | Авто | Читає, об'єднує, ділить, заповнює PDF | «Об'єднай ці два PDF» |
-| `pptx` | Авто | Створює і редагує презентації PowerPoint | «Зроби презентацію на 5 слайдів» |
-| `xlsx` | Авто | Створює і редагує таблиці Excel і CSV | «Порахуй суми в цій таблиці» |
-| `google-workspace` | Авто | Працює з Google Docs, Sheets, Slides і Drive | «Знайди в Drive файл з бюджетом» |
-| `import-memory` | Авто | Переносить пам'ять з іншого асистента | «Імпортуй мої нотатки з ChatGPT» |
-| `morning` | Вручну | Ранковий звіт (план дня, календар) | `/morning` |
-| `skill-creator` | Авто | Створює і покращує власні скіли | «Створи скіл для перевірки SEO» |
-| `init` | Вручну | Створює CLAUDE.md для проєкту | `/init` |
-| `loop` | Вручну | Повторює команду з інтервалом | `/loop 5m /run` |
-| `schedule` | Вручну | Планує задачі на певний час (хмарні агенти) | `/schedule` |
-| `claude-api` | Авто | Довідка по API Claude і SDK, моделі, ціни | «Як викликати Claude API з потоком відповіді» |
-| `update-config` | Авто | Змінює `settings.json`: дозволи, змінні середовища, хуки | «Дозволь npm-команди без запиту» |
-| `keybindings-help` | Авто | Змінює гарячі клавіші | «Зміни гарячу клавішу відправки» |
-| `simplify` | Вручну | Перевіряє змінений код на спрощення (без пошуку багів) | `/simplify` |
-| `code-review` | Вручну | Ревʼю поточних змін або PR | `/code-review` |
-| `security-review` | Вручну | Перевірка безпеки змін у гілці | `/security-review` |
-| `ship` | Тільки команда | Коміт, PR, ревʼю і стеження за PR до злиття. Claude сам його не запускає | `/ship` |
-| `steward` | Тільки команда | Стежить за PR: CI, конфлікти, коментарі. Не зливає | `/steward` |
-| `fewer-permission-prompts` | Вручну | Складає список дозволів, щоб менше питало | `/fewer-permission-prompts` |
-| `claude-approvals` | Авто | Політики перевірки змін у GitHub (`.claude/approvals.yml`) | «Додай правило перевірки для папки api» |
-| `run` | Авто | Запускає застосунок і перевіряє зміну в реальності | «Запусти сайт і перевір форму» |
-| `dataviz` | Авто | Створює графіки і дашборди | «Зроби графік продажів по місяцях» |
-| `artifact-design` | Авто | Правила дизайну для «артефактів» (окремих сторінок у claude.ai) | Працює разом з публікацією сторінок |
-| `artifact-diagramming` | Авто | Діаграми в артефактах | «Намалюй схему бази даних» |
-| `artifact-capabilities` | Авто | Можливості артефактів: збереження стану, дані | Працює разом з артефактами |
-| `plugin-authoring` | Авто | Створення змін інтерфейсу Claude (теми, панелі, команди) | «Зроби тему кольорів для Claude» |
-| `built-in-browser` | Авто | Керування вбудованим браузером застосунку | «Відкрий сайт у браузері і прочитай текст» |
-| `chrome-browser` | Авто | Керування твоїм Chrome через розширення | «Відкрий мою пошту в Chrome» |
-| `computer-use` | Авто | Керування комп'ютером: клікання, введення тексту | «Відкрий Notes і напиши список» |
+| `deep-research` | Auto | Researches a topic across many sources and writes a report | "Research the market for furniture websites in Poland" |
+| `docs` | Auto | Creates and edits shareable, commentable documents | "Write a spec document for this feature" |
+| `docx` | Auto | Creates and edits Word files (.docx) | "Make a contract in Word format" |
+| `pdf` | Auto | Reads, merges, splits, fills in PDFs | "Merge these two PDFs" |
+| `pptx` | Auto | Creates and edits PowerPoint presentations | "Make a 5-slide deck" |
+| `xlsx` | Auto | Creates and edits Excel and CSV files | "Sum the totals in this table" |
+| `google-workspace` | Auto | Works with Google Docs, Sheets, Slides and Drive | "Find the budget file in my Drive" |
+| `import-memory` | Auto | Brings memory in from another assistant | "Import my notes from ChatGPT" |
+| `morning` | Manual | Morning brief (plan for the day, calendar) | `/morning` |
+| `skill-creator` | Auto | Creates and improves your own skills | "Create a skill that checks SEO" |
+| `init` | Manual | Creates CLAUDE.md for a project | `/init` |
+| `loop` | Manual | Repeats a command on an interval | `/loop 5m /run` |
+| `schedule` | Manual | Schedules tasks for later (cloud agents) | `/schedule` |
+| `claude-api` | Auto | Reference for the Claude API and SDKs: models, prices, parameters | "How do I stream a Claude API response?" |
+| `update-config` | Auto | Edits `settings.json`: permissions, environment variables, hooks | "Allow npm commands without asking" |
+| `keybindings-help` | Auto | Changes keyboard shortcuts | "Change the send shortcut" |
+| `simplify` | Manual | Checks changed code for simplification (not for bugs) | `/simplify` |
+| `code-review` | Manual | Reviews your current changes or a pull request | `/code-review` |
+| `security-review` | Manual | Security review of the changes on a branch | `/security-review` |
+| `ship` | Command only | Commit, pull request, review, and watches the PR until it is merged. Claude never starts it by itself | `/ship` |
+| `steward` | Command only | Watches a PR: CI, conflicts, comments. Does not merge | `/steward` |
+| `fewer-permission-prompts` | Manual | Builds a list of permissions so Claude asks less | `/fewer-permission-prompts` |
+| `claude-approvals` | Auto | Rules for review checks on GitHub (`.claude/approvals.yml`) | "Add a review check for the api folder" |
+| `run` | Auto | Starts your app and checks a change for real | "Start the site and test the form" |
+| `dataviz` | Auto | Creates charts and dashboards | "Make a sales chart by month" |
+| `artifact-design` | Auto | Design rules for "artifacts" (standalone pages in claude.ai) | Used when publishing pages |
+| `artifact-diagramming` | Auto | Diagrams inside artifacts | "Draw a database schema" |
+| `artifact-capabilities` | Auto | What artifacts can do: saving state, data | Used together with artifacts |
+| `plugin-authoring` | Auto | Changes Claude's own interface (themes, panels, commands) | "Make a color theme for Claude" |
+| `built-in-browser` | Auto | Controls the browser built into the app | "Open the site and read the text" |
+| `chrome-browser` | Auto | Controls your Chrome through the extension | "Open my mail in Chrome" |
+| `computer-use` | Auto | Controls your computer: clicks, typing | "Open Notes and write a list" |
 
 ---
 
-## 3. Плагін: agent-skills (процес розробки)
+## 3. Plugin: agent-skills (development process)
 
-Більшість скілів авто. Ось найкорисніші для тебе.
+Most skills are Auto. These are the most useful for you.
 
-| Скіл | Тип | Що робить | Коли |
+| Skill | Type | What it does | When |
 |---|---|---|---|
-| `using-agent-skills` | Авто | Вибирає, який скіл потрібен для задачі | Початок сесії |
-| `idea-refine` | Авто | Перетворює сиру ідею на чітку концепцію | Ідея ще розмита |
-| `interview-me` | Авто | Ставить питання по одному, поки не стане ясно, чого хочеш | Не знаєш, що саме потрібно |
-| `spec-driven-development` | Авто | Пише спеку перед кодом | Нова фіча або великі зміни |
-| `planning-and-task-breakdown` | Авто | Розбиває спеку на кроки | Після спеки |
-| `incremental-implementation` | Авто | Пише код маленькими перевіреними кроками | Зміна в кількох файлах |
-| `test-driven-development` | Авто | Тести першими: червоний, зелений, рефакторинг | Будь-яка логіка або баг |
-| `debugging-and-error-recovery` | Авто | Пошук причини помилки | Тести падають, збірка ламається |
-| `code-review-and-quality` | Авто | Багатоаспектне ревʼю коду | Перед злиттям |
-| `frontend-ui-engineering` | Авто | Продакшн-якість інтерфейсу, доступність | Створення сторінок і компонентів |
-| `accessibility-engineering` | Авто | Перевірка WCAG 2.2 AA і виправлення | Аудит доступності |
-| `api-and-interface-design` | Авто | Проєктування API і меж модулів | Нові ендпоінти |
-| `security-and-hardening` | Авто | Захист від вразливостей | Обробка введення, логін, дані |
-| `performance-optimization` | Авто | Прискорення фронтенду, бекенду, запитів | Повільно |
-| `browser-testing-with-devtools` | Авто | Тести в реальному браузері через DevTools | Дебаг у браузері |
-| `source-driven-development` | Авто | Звірка рішень з офіційною документацією | Невідома бібліотека |
-| `documentation-and-adrs` | Авто | Записує рішення і перевіряє застарілу документацію | Важливе архітектурне рішення |
-| `git-workflow-and-versioning` | Авто | Правила гілок і комітів | Коміти, гілки, конфлікти |
-| `ci-cd-and-automation` | Авто | Налаштування збірки і деплою | Автоматизація |
-| `shipping-and-launch` | Авто | Чеклист перед продакшном | Перед запуском |
-| `code-simplification` | Авто | Спрощення коду без зміни поведінки | Код працює, але важко читати |
-| `deprecation-and-migration` | Авто | Видалення старих систем і міграції | Переїзд з однієї реалізації на іншу |
-| `context-engineering` | Авто | Налаштування контексту сесії | Якість відповідей падає |
-| `doubt-driven-development` | Авто | Перевірка рішень незалежним критиком | Хочеш перевірити припущення |
-| `constraint-driven-development` | Авто | Письмовий контракт на якість коду | Щоб агент не знижував планку |
-| `observability-and-instrumentation` | Авто | Логи, метрики, трасування | Перед продакшном |
+| `using-agent-skills` | Auto | Picks which skill fits the task | Start of a session |
+| `idea-refine` | Auto | Turns a raw idea into a clear concept | The idea is still vague |
+| `interview-me` | Auto | Asks one question at a time until it is clear what you want | You are not sure what you need |
+| `spec-driven-development` | Auto | Writes a spec before code | New feature or large change |
+| `planning-and-task-breakdown` | Auto | Splits a spec into steps | After the spec |
+| `incremental-implementation` | Auto | Writes code in small, verified steps | Change touches several files |
+| `test-driven-development` | Auto | Tests first: red, green, refactor | Any logic or bug |
+| `debugging-and-error-recovery` | Auto | Finds the cause of an error | Tests fail, build breaks |
+| `code-review-and-quality` | Auto | Multi-angle code review | Before merging |
+| `frontend-ui-engineering` | Auto | Production-quality, accessible interfaces | Building pages and components |
+| `accessibility-engineering` | Auto | Checks WCAG 2.2 AA and fixes issues | Accessibility audit |
+| `api-and-interface-design` | Auto | Designs APIs and module boundaries | New endpoints |
+| `security-and-hardening` | Auto | Protects against vulnerabilities | User input, login, stored data |
+| `performance-optimization` | Auto | Speeds up frontend, backend, queries | Something is slow |
+| `browser-testing-with-devtools` | Auto | Tests in a real browser through DevTools | Debugging in the browser |
+| `source-driven-development` | Auto | Checks decisions against official documentation | Unfamiliar library |
+| `documentation-and-adrs` | Auto | Records decisions; spots outdated docs | Important architecture decision |
+| `git-workflow-and-versioning` | Auto | Branch and commit practices | Commits, branches, conflicts |
+| `ci-cd-and-automation` | Auto | Sets up build and deploy pipelines | Automation |
+| `shipping-and-launch` | Auto | Checklist before production | Before launch |
+| `code-simplification` | Auto | Simplifies code without changing behavior | Works but is hard to read |
+| `deprecation-and-migration` | Auto | Removes old systems, migrates users | Moving from one implementation to another |
+| `context-engineering` | Auto | Sets up the session context | Answer quality drops |
+| `doubt-driven-development` | Auto | Has a fresh reviewer challenge decisions | You want assumptions checked |
+| `constraint-driven-development` | Auto | Writes a quality contract so the agent does not lower the bar | Keeping standards high |
+| `observability-and-instrumentation` | Auto | Logs, metrics, tracing | Before production |
 
 ---
 
-## 4. Плагін: mattpocock-skills
+## 4. Plugin: mattpocock-skills
 
-| Команда | Тип | Що робить | Коли |
+| Command | Type | What it does | When |
 |---|---|---|---|
-| `/setup-matt-pocock-skills` | Вручну | Налаштовує трекер задач, мітки, місце для словника | Один раз на проєкт |
-| `/grill-me` | Вручну | Жорстке інтерв'ю про план, поки він не стане чітким | Перед фічею |
-| `/grill-with-docs` | Вручну | Те саме, але записує ADR і словник | Коли важливі рішення |
-| `/grilling` | Авто | Той самий допит, якщо просиш «grill me» | Стрес-тест ідеї |
-| `/domain-modeling` | Авто | Веде `GLOSSARY.md` і ADR | Нові терміни або рішення |
-| `/tdd` | Авто | TDD: тести першими | Логіка або баг |
-| `/diagnosing-bugs` | Авто | Цикл: відтворити, знайти причину, перевірити | Складний баг |
-| `/prototype` | Авто | Одноразовий прототип, щоб перевірити одне питання | Ідея без інтерфейсу |
-| `/research` | Авто | Дослідження з перевіреними джерелами, результат у Markdown | Збір фактів |
-| `/codebase-design` | Авто | Словник для проєктування модулів | Рефакторинг модуля |
-| `/improve-codebase-architecture` | Вручну | Шукає, що спростити, робить HTML-звіт | Раз на кілька місяців |
-| `/handoff` | Вручну | Стискає розмову в документ для нової сесії | Перед закриттям сесії |
-| `/to-spec` | Вручну | Робить спеку з поточної розмови і публікує в трекер | Після обговорення |
-| `/to-tickets` | Вручну | Розбиває план на задачі в трекері | Після спеки |
-| `/to-questionnaire` | Вручну | Робить анкету для іншої людини | Коли рішення має прийняти хтось інший |
-| `/triage` | Вручну | Розбирає вхідні задачі й PR | Коли є трекер |
-| `/implement` | Вручну | Реалізує задачу зі спеки або списку задач | Після `/to-tickets` |
-| `/implement-spec` | Вручну | Реалізує результат `/to-spec` і `/to-tickets` | Після спеки |
-| `/wayfinder` | Вручну | Великий план як карта рішень | Завдання більше за одну сесію |
-| `/retro` | Вручну | Ретроспектива сесії | Після роботи |
-| `/teach` | Вручну | Навчає концепції в робочому просторі | Не потрібно, якщо не вивчаєш |
-| `/ask-matt` | Вручну | Підказує, який скіл підходить | Не знаєш, що вибрати |
-| `/wizard` | Авто | Створює інтерактивний bash-майстер для кроків, які робиш ти | Налаштування інфраструктури |
-| `/writing-for-agents` | Авто | Пише інструкції для агентів (скіли, CLAUDE.md) | Редагування інструкцій |
+| `/setup-matt-pocock-skills` | Manual | Sets up the issue tracker, labels, and where the glossary goes | Once per project |
+| `/grill-me` | Manual | A strict interview about your plan until it is clear | Before a feature |
+| `/grill-with-docs` | Manual | The same, and it writes ADRs and the glossary | When decisions matter |
+| `/grilling` | Auto | The same interview when you say "grill me" | Stress-testing an idea |
+| `/domain-modeling` | Auto | Maintains `GLOSSARY.md` and ADRs | New terms or decisions |
+| `/tdd` | Auto | TDD: tests first | Logic or a bug |
+| `/diagnosing-bugs` | Auto | Loop: reproduce, find the cause, verify | A hard bug |
+| `/prototype` | Auto | Throwaway prototype to test one question | An idea without UI yet |
+| `/research` | Auto | Research from verified sources, saved as Markdown | Collecting facts |
+| `/codebase-design` | Auto | Vocabulary for designing modules | Refactoring a module |
+| `/improve-codebase-architecture` | Manual | Finds what to simplify and writes an HTML report | Every few months |
+| `/handoff` | Manual | Condenses the conversation into a document for a new session | Before closing a session |
+| `/to-spec` | Manual | Turns the current conversation into a spec and publishes it to the tracker | After a discussion |
+| `/to-tickets` | Manual | Splits a plan into tickets in the tracker | After a spec |
+| `/to-questionnaire` | Manual | Makes a questionnaire for someone else to fill in | When someone else must decide |
+| `/triage` | Manual | Sorts incoming issues and PRs | When you have a tracker |
+| `/implement` | Manual | Implements a ticket or a spec | After `/to-tickets` |
+| `/implement-spec` | Manual | Implements the output of `/to-spec` and `/to-tickets` | After a spec |
+| `/wayfinder` | Manual | A large plan as a map of decisions | Work bigger than one session |
+| `/retro` | Manual | Retrospective on a session | After a session |
+| `/teach` | Manual | Teaches a concept inside the workspace | Not needed unless you want lessons |
+| `/ask-matt` | Manual | Suggests which skill fits your situation | You do not know what to pick |
+| `/wizard` | Auto | Creates an interactive bash wizard for steps only you can do | Setting up infrastructure |
+| `/writing-for-agents` | Auto | Writes instructions for agents (skills, CLAUDE.md) | Editing instructions |
 
 ---
 
-## 5. Плагін: impeccable (дизайн фронтенду)
+## 5. Plugin: impeccable (frontend design)
 
-Формат: `/impeccable <команда> <ціль>`. Ціль — файл або маршрут, наприклад `/impeccable critique src/app/page.tsx`. Без цілі Claude спитає.
+Format: `/impeccable <command> <target>`. The target is a file or route, for example `/impeccable critique src/app/page.tsx`. Without a target, Claude asks.
 
-| Команда | Категорія | Що робить |
+| Command | Category | What it does |
 |---|---|---|
-| `/impeccable init` | Створення | Записує продукт і користувачів у `PRODUCT.md`. Запускай першим |
-| `/impeccable document` | Створення | Створює `DESIGN.md` з коду проєкту |
-| `/impeccable shape [feature]` | Створення | Планує UX/UI перед кодом |
-| `/impeccable extract [target]` | Створення | Виносить повторювані стилі і компоненти в систему дизайну |
-| `/impeccable critique [target]` | Оцінка | Огляд UX з оцінками за евристиками |
-| `/impeccable audit [target]` | Оцінка | Технічна перевірка: доступність, швидкість, адаптивність |
-| `/impeccable polish [target]` | Доопрацювання | Фінальна перевірка перед показом |
-| `/impeccable bolder [target]` | Доопрацювання | Робить нудний дизайн виразнішим |
-| `/impeccable quieter [target]` | Доопрацювання | Пом'якшує агресивний або перевантажений дизайн |
-| `/impeccable distill [target]` | Доопрацювання | Прибирає зайве |
-| `/impeccable harden [target]` | Доопрацювання | Помилки, порожні стани, переклади, крайні випадки |
-| `/impeccable onboard [target]` | Доопрацювання | Перший запуск, порожні екрани |
-| `/impeccable animate [target]` | Покращення | Додає доречні анімації |
-| `/impeccable colorize [target]` | Покращення | Додає кольори в монохромний інтерфейс |
-| `/impeccable typeset [target]` | Покращення | Ієрархія і шрифти |
-| `/impeccable layout [target]` | Покращення | Відступи, ритм, ієрархія |
-| `/impeccable delight [target]` | Покращення | Характер і запам'ятовувані деталі |
-| `/impeccable overdrive [target]` | Покращення | Виходить за звичні межі |
-| `/impeccable clarify [target]` | Виправлення | Тексти, підписи, повідомлення про помилки |
-| `/impeccable adapt [target]` | Виправлення | Адаптація під пристрої |
-| `/impeccable optimize [target]` | Виправлення | Швидкодія інтерфейсу |
-| `/impeccable live` | Ітерації | Вибираєш елементи в браузері і пробуєш варіанти |
-| `/impeccable generate [n] [дія] [елемент]` | Ітерації | Створює n варіантів елемента для вибору в браузері |
+| `/impeccable init` | Build | Writes product and audience notes into `PRODUCT.md`. Run first |
+| `/impeccable document` | Build | Creates `DESIGN.md` from the project code |
+| `/impeccable shape [feature]` | Build | Plans the UX and UI before code |
+| `/impeccable extract [target]` | Build | Moves repeated styles and components into a design system |
+| `/impeccable critique [target]` | Evaluate | UX review with heuristic scores |
+| `/impeccable audit [target]` | Evaluate | Technical checks: accessibility, speed, responsiveness |
+| `/impeccable polish [target]` | Refine | Final pass before showing |
+| `/impeccable bolder [target]` | Refine | Makes a bland design more striking |
+| `/impeccable quieter [target]` | Refine | Calms an aggressive or cluttered design |
+| `/impeccable distill [target]` | Refine | Removes what is not needed |
+| `/impeccable harden [target]` | Refine | Errors, empty states, translations, edge cases |
+| `/impeccable onboard [target]` | Refine | First-run flows and empty screens |
+| `/impeccable animate [target]` | Enhance | Adds purposeful animation |
+| `/impeccable colorize [target]` | Enhance | Adds color to a monochrome interface |
+| `/impeccable typeset [target]` | Enhance | Type hierarchy and fonts |
+| `/impeccable layout [target]` | Enhance | Spacing, rhythm, hierarchy |
+| `/impeccable delight [target]` | Enhance | Personality and memorable details |
+| `/impeccable overdrive [target]` | Enhance | Goes past conventional limits |
+| `/impeccable clarify [target]` | Fix | Copy, labels, error messages |
+| `/impeccable adapt [target]` | Fix | Adapts to devices and screen sizes |
+| `/impeccable optimize [target]` | Fix | Interface performance |
+| `/impeccable live` | Iterate | Pick elements in the browser and try variants |
+| `/impeccable generate [n] [action] [element]` | Iterate | Creates n variants of an element to choose from in the browser |
 
-Порядок для нової сторінки: `init` → `shape` → (код) → `critique` → `polish`.
+Order for a new page: `init` → `shape` → (code) → `critique` → `polish`.
 
 ---
 
-## 6. Плагін: ui-ux-pro-max (база дизайну)
+## 6. Plugin: ui-ux-pro-max (design database)
 
-| Скіл | Тип | Що робить | Приклад |
+| Skill | Type | What it does | Example |
 |---|---|---|---|
-| `ui-ux-pro-max` | Авто | Загальні поради щодо інтерфейсу, стеків, доступності | «Як зробити форму зручнішою» |
-| `design` | Авто | Бренд, токени, стилі, логотипи, банери | «Підбери стиль для сайту доставки» |
-| `design-system` | Авто | Токени кольорів, відступів, шрифтів, компонентів | `/design-system кнопки` |
-| `ui-styling` | Авто | Верстка з Tailwind і shadcn/ui | `/ui-styling картка товару` |
-| `brand` | Авто | Голос бренду, візуальна ідентичність | «Опиши тон голосу для сайту» |
-| `banner-design` | Авто | Банери для соцмереж і реклами | `/banner-design instagram` |
-| `slides` | Авто | HTML-презентації | `/slides тема 8 слайдів` |
+| `ui-ux-pro-max` | Auto | General interface advice, stacks, accessibility | "How do I make this form easier to use" |
+| `design` | Auto | Brand, tokens, styles, logos, banners | "Pick a style for a delivery website" |
+| `design-system` | Auto | Tokens for colors, spacing, fonts, components | `/design-system buttons` |
+| `ui-styling` | Auto | Layouts with Tailwind and shadcn/ui | `/ui-styling product card` |
+| `brand` | Auto | Brand voice, visual identity | "Describe the tone of voice for the site" |
+| `banner-design` | Auto | Banners for social media and ads | `/banner-design instagram` |
+| `slides` | Auto | HTML presentations | `/slides topic, 8 slides` |
 
 ---
 
-## 7. Плагін: ponytail (економія токенів)
+## 7. Plugin: ponytail (lower token use)
 
-| Команда | Що робить |
+| Command | What it does |
 |---|---|
-| `/ponytail lite` | Рівень «м'який» |
-| `/ponytail full` | Рівень «стандарт» (у тебе за замовчуванням) |
-| `/ponytail ultra` | Найжорсткіший рівень |
-| `/ponytail off` | Вимкнути |
-| `/ponytail` | Показати поточний рівень |
-| `/ponytail-help` | Короткий довідник |
-| `/ponytail-gain` | Скільки коду й токенів зекономлено |
-| `/ponytail-review` | Ревʼю змін: баги, безпека, зайвий код |
-| `/ponytail-audit` | Аудит всього репо |
-| `/ponytail-debt` | Збирає позначки `shortcut:` у список боргів |
-| `/ponytail band on` / `off` | Показати або сховати панель над полем вводу (тільки Claude Code) |
-| `/ponytail band import` | Додає минулі сесії на дошку витрат |
+| `/ponytail lite` | Light level |
+| `/ponytail full` | Standard level (default in this setup) |
+| `/ponytail ultra` | Strictest level |
+| `/ponytail off` | Turn off |
+| `/ponytail` | Show the current level |
+| `/ponytail-help` | Short reference |
+| `/ponytail-gain` | How much code and tokens were saved |
+| `/ponytail-review` | Reviews changes for bugs, security, unnecessary code |
+| `/ponytail-audit` | Audits the whole repo |
+| `/ponytail-debt` | Collects `shortcut:` comments into a debt list |
+| `/ponytail band on` / `off` | Show or hide the panel above the input box (Claude Code only) |
+| `/ponytail band import` | Adds past sessions to the cost board |
 
 ---
 
-## 8. Context7 (документація бібліотек)
+## 8. Context7 (library documentation)
 
-Не скіл і не команда. Додай у запит слова `use context7`.
+Not a skill and not a command. Add the words `use context7` to your request.
 
-| Приклад | Що станеться |
+| Example | What happens |
 |---|---|
-| `use context7, як у Prisma зробити вкладену вибірку` | Claude бере актуальну документацію Prisma |
-| `use context7, Jest: як мокати модуль` | Документація Jest |
+| `use context7, how do I write a nested select in Prisma` | Claude fetches current Prisma documentation |
+| `use context7, Jest: how to mock a module` | Jest documentation |
 
 ---
 
-## 9. Швидкі сценарії
+## 9. Quick workflows
 
-| Задача | Що вводити |
+| Task | What to type |
 |---|---|
-| Новий проєкт | `/init`, потім `/setup-matt-pocock-skills`, потім `/impeccable init` |
-| Нова фіча | `/grill-me` → `spec-driven-development` → `/tdd` → `code-review-and-quality` |
-| Баг | `/diagnosing-bugs` |
-| Нова сторінка | `/impeccable shape` → `/design-system` → верстка → `/impeccable critique` → `/impeccable polish` |
-| Незнайома бібліотека | `use context7` у запиті |
-| Перед злиттям | `/code-review`, `/security-review`, `/simplify` |
-| Коміт і PR | `/ship` |
-| Не знаєш, що вибрати | `/ask-matt` |
+| New project | `/init`, then `/setup-matt-pocock-skills`, then `/impeccable init` |
+| New feature | `/grill-me` → `spec-driven-development` → `/tdd` → `code-review-and-quality` |
+| Bug | `/diagnosing-bugs` |
+| New page | `/impeccable shape` → `/design-system` → build → `/impeccable critique` → `/impeccable polish` |
+| Unfamiliar library | `use context7` in your request |
+| Before merging | `/code-review`, `/security-review`, `/simplify` |
+| Commit and PR | `/ship` |
+| Not sure what to pick | `/ask-matt` |
 
 ---
 
-## Примітки
+## Notes
 
-- Опис кожного скіла у твоїй сесії можна подивитись через `/plugin` або введенням `/`.
-- Команди з плагінів можуть мати префікс назви плагіна, якщо є конфлікт імен.
-- Ця сторінка описує встановлене на момент написання. Після оновлень перевіряй список через `/`.
+- To see the descriptions of the skills in your session, use `/plugin`, or type `/`.
+- Plugin commands may carry the plugin name as a prefix if two names clash.
+- This page describes what was installed when it was written. After updates, check the list with `/`.

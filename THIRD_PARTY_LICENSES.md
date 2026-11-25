@@ -1,17 +1,17 @@
 # Third-party licenses
 
-Файли цього репозиторію (скрипти, шаблони, документація) мають ліцензію MIT, див. [LICENSE](LICENSE).
+Files in this repository (scripts, templates, documentation) are MIT licensed, see [LICENSE](LICENSE).
 
-Цей репозиторій не копіює код сторонніх плагінів. Скрипт `scripts/install-plugins.sh` тільки встановлює їх з їхніх маркетплейсів. Нижче — ліцензії цих плагінів, скопійовані з їхніх репозиторіїв на момент встановлення. Актуальні версії дивись у вихідних репозиторіях.
+This repository does not copy the code of third-party plugins. `scripts/install-plugins.sh` only installs them from their marketplaces. Below are the licenses of those plugins, copied from their repositories at the time of installation. For current versions, see the upstream repositories.
 
-| Плагін | Автор | Ліцензія | Джерело |
+| Plugin | Author | License | Source |
 |---|---|---|---|
 | agent-skills | Addy Osmani | MIT | https://github.com/addyosmani/agent-skills |
-| impeccable | Paul Bakaus | Apache-2.0 (+ NOTICE з MIT-частинами) | https://github.com/pbakaus/impeccable |
+| impeccable | Paul Bakaus | Apache-2.0 (plus a NOTICE file with MIT-licensed parts) | https://github.com/pbakaus/impeccable |
 | ponytail | Dietrich Gebert | MIT | https://github.com/DietrichGebert/ponytail |
 | mattpocock-skills | Matt Pocock | MIT | https://github.com/mattpocock/skills |
 | ui-ux-pro-max | Next Level Builder | MIT | https://github.com/nextlevelbuilder/ui-ux-pro-max-skill |
-| context7 | Upstash | Apache-2.0 (за ліцензією маркетплейсу claude-plugins-official) | https://github.com/upstash/context7 |
+| context7 | Upstash | Apache-2.0 (per the claude-plugins-official marketplace license) | https://github.com/upstash/context7 |
 
 ---
 
@@ -353,7 +353,7 @@ SOFTWARE.
 
 ## context7 (Apache-2.0)
 
-Текст ліцензії з маркетплейсу claude-plugins-official, який містить плагін context7:
+License text from the claude-plugins-official marketplace, which contains the context7 plugin:
 
 
                                  Apache License

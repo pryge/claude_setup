@@ -1,24 +1,26 @@
 # claude-setup
 
-Плагіни для Claude Code і шаблон `CLAUDE.md` для проєктів на сайтах. Тут немає власних скілів: усе, що потрібно, приходить із плагінів.
+Plugins and a project template for building websites with Claude Code.
 
-Мова: Claude відповідає українською (це задано в `templates/project/CLAUDE.md`), код і технічні терміни англійською.
+This repo has no skills of its own. Everything comes from plugins, installed from their own marketplaces.
 
-## 1. Встановлення (один раз на комп'ютер)
+Claude answers in English (see `templates/project/CLAUDE.md`). Code and technical terms are in English.
 
-Потрібні: Claude Code (з командою `claude` у терміналі) і `git`. Версія Claude Code не нижче 2.1.290 (для ponytail).
+## 1. Install (once per computer)
 
-**Одна команда** (у терміналі, не в Claude Code):
+You need: Claude Code (with the `claude` command in the terminal) and `git`. Claude Code version 2.1.290 or newer (for ponytail).
+
+**One command** (in your terminal, not inside Claude Code):
 
 ```bash
 git clone https://github.com/pryge/claude_setup.git ~/claude-setup && ~/claude-setup/scripts/install-plugins.sh
 ```
 
-Скрипт ставить усі шість плагінів. Його можна запускати повторно: уже встановлені він пропускає. Якщо `claude` не в PATH, вкажи шлях: `CLAUDE_BIN=/шлях/до/claude ~/claude-setup/scripts/install-plugins.sh`.
+The script installs all six plugins. You can run it again: plugins already installed are skipped. If `claude` is not in your PATH, give the path: `CLAUDE_BIN=/path/to/claude ~/claude-setup/scripts/install-plugins.sh`.
 
-Після цього перезапусти Claude Code і зроби два кроки (тільки раз, див. розділ 3): `/impeccable init` і `/setup-matt-pocock-skills` у папці проєкту.
+Then restart Claude Code and do two one-time steps in each project (see section 3): `/impeccable init` and `/setup-matt-pocock-skills`.
 
-Якщо скрипт не працює, ті самі команди вручну в Claude Code:
+If the script does not work, run these commands by hand inside Claude Code:
 
 ```text
 /plugin marketplace add addyosmani/agent-skills
@@ -38,98 +40,103 @@ git clone https://github.com/pryge/claude_setup.git ~/claude-setup && ~/claude-s
 /plugin install context7@claude-plugins-official
 ```
 
-Потім перезапусти Claude Code. Перевірити: `/plugin` або в терміналі `claude plugin list` (усі шість мають бути `enabled`).
+Plugins are stored in `~/.claude`, not in this repo. Check them with `/plugin` or `claude plugin list`.
 
-Плагіни зберігаються в `~/.claude`, а не в цьому репо.
+- **agent-skills**: development workflow (spec, plan, test-first, debugging, code review, security, shipping).
+- **impeccable**: design and frontend quality.
+- **ponytail**: lower token use. It asks for optional settings (task board, webhook); leave them empty.
+- **mattpocock-skills**: prototypes, research, domain glossary, module design, planning interviews.
+- **ui-ux-pro-max**: searchable design database (palettes, font pairs, styles, UX rules).
+- **context7**: current library documentation (NestJS, Prisma, Three.js, Jest, Cypress) on request.
 
-## 2. Що куди
+Known costs, from the review before installing: impeccable runs a binary on every file edit, and ponytail adds hooks to every session and writes a CSV file to disk. To turn either off, run `/plugin disable <name>`.
 
-| Плагін | Для чого | Як викликати | Коли |
+## 2. What goes where
+
+| Plugin | What it does | How to use it | When |
 |---|---|---|---|
-| **agent-skills** | Процес: спека, план, TDD, дебаг, ревʼю, безпека, запуск | Частина скілів спрацьовує сама за описом. Список: `/` у Claude Code | Нова фіча, баг, перед деплоєм |
-| **impeccable** | Дизайн і якість фронтенду | `/impeccable critique`, `/impeccable polish`, `/impeccable audit` тощо. Повний список: `/impeccable` без аргументів | Є готова сторінка або компонент, який треба покращити |
-| **ponytail** | Економія токенів | `/ponytail-help`, `/ponytail-gain` (скільки зекономлено), `/ponytail-audit` | Коли сесії стають дорогими |
-| **mattpocock-skills** | Прототипи, дослідження, словник, модулі, плани | `/grill-me`, `/prototype`, `/research`, `/domain-modeling`, `/tdd`, `/diagnosing-bugs`, `/handoff` | Див. розділ 3 |
-| **ui-ux-pro-max** | База дизайну: палітри, пари шрифтів, стилі, UX-правила | `/design`, `/design-system`, `/ui-styling`, `/brand` | Вибір стилю і кольорів, перед версткою |
-| **context7** | Актуальна документація бібліотек | Додай до запиту `use context7`, наприклад: `use context7, як у Prisma зробити вкладену вибірку` | Коли не впевнений у синтаксисі або версії |
+| **agent-skills** | Process: spec, plan, test-first, debugging, review, security, shipping | Most skills run by themselves when your request matches them. To see the list, type `/` | New feature, bug, before deploying |
+| **impeccable** | Design and frontend quality | `/impeccable critique`, `/impeccable polish`, `/impeccable audit`, and more. Type `/impeccable` alone for the menu | A page or component exists and needs improving |
+| **ponytail** | Lower token use | `/ponytail-help`, `/ponytail-gain` (savings), `/ponytail-audit` | When sessions get expensive |
+| **mattpocock-skills** | Prototypes, research, glossary, modules, plans | `/grill-me`, `/prototype`, `/research`, `/domain-modeling`, `/tdd`, `/diagnosing-bugs`, `/handoff` | See section 3 |
+| **ui-ux-pro-max** | Design database: palettes, font pairs, styles, UX rules | `/design`, `/design-system`, `/ui-styling`, `/brand` | Choosing a style and colors, before coding the layout |
+| **context7** | Current library documentation | Add `use context7` to your request | When unsure about a library's syntax or version |
 
-Назви в колонці «Як викликати» — з описів скілів. Якщо команда не знайдена, відкрий `/` і шукай за словом.
+Every command and skill, with a short explanation, is in [docs/COMMANDS.md](docs/COMMANDS.md).
 
-## 3. Сценарії
+## 3. Common tasks
 
-**Новий проєкт**
-1. `scripts/init-project.sh ~/Programming/назва` (створює `CLAUDE.md`, нічого не перезаписує).
-2. У Claude Code, у папці проєкту: `/setup-matt-pocock-skills`. Скіли mattpocock (`/to-spec`, `/triage` тощо) без цього не знають, де трекер задач і де `GLOSSARY.md`. Запускай один раз на проєкт.
-3. Для сайтів: `/impeccable init`. Створить `PRODUCT.md` (що за продукт і для кого) і `DESIGN.md` (стиль). Заповни їх своїми словами, бо від цього залежать усі наступні дизайн-поради.
+**New project**
+1. Run `scripts/init-project.sh ~/Programming/your-project`. This creates `CLAUDE.md` and never overwrites an existing file.
+2. In Claude Code, inside the project folder, run `/setup-matt-pocock-skills`. The mattpocock skills (`/to-spec`, `/triage`, and others) need it to know where your issues live and where `GLOSSARY.md` goes. Run it once per project.
+3. For websites, run `/impeccable init`. It creates `PRODUCT.md` (what the product is and who it is for) and `DESIGN.md` (the visual style). Fill them in with your own words, because all later design advice depends on them.
 
-**Нова фіча**
-1. `/grill-me` — Claude ставить питання про план, поки не стане ясно.
-2. Спека і план: скіл `spec-driven-development` або `planning-and-task-breakdown` з agent-skills (або `/to-spec` з mattpocock).
-3. Реалізація test-first: `/tdd` або `test-driven-development`.
-4. Перед здачею: `code-review-and-quality`, потім `/impeccable critique`, якщо є UI.
+**New feature**
+1. `/grill-me`: Claude asks questions about your plan until it is clear.
+2. Spec and plan: the `spec-driven-development` or `planning-and-task-breakdown` skill from agent-skills (or `/to-spec` from mattpocock).
+3. Build test-first: `/tdd` or `test-driven-development`.
+4. Before you finish: `code-review-and-quality`, then `/impeccable critique` if the change has UI.
 
-**Баг або повільний сайт**
-- `/diagnosing-bugs` (цикл: відтворити, знайти причину, перевірити) або `debugging-and-error-recovery` з agent-skills.
+**Bug or slow page**
+- `/diagnosing-bugs` (loop: reproduce, find the cause, verify), or `debugging-and-error-recovery` from agent-skills.
 
-**Дизайн сторінки**
-1. `/design` або `/design-system` з ui-ux-pro-max: вибрати стиль, палітру, шрифти.
-2. Записати рішення в `DESIGN.md`.
-3. Верстка, потім `/impeccable critique` (зауваження) і `/impeccable polish` (доведення до ладу).
+**Page design**
+1. `/design` or `/design-system` from ui-ux-pro-max: choose a style, palette and fonts.
+2. Write the decisions into `DESIGN.md`.
+3. Build the layout, then `/impeccable critique` (remarks) and `/impeccable polish` (finish).
 
-**Не впевнений у бібліотеці**
-- `use context7` у запиті. Наприклад: `use context7, Jest: як мокати модуль з default export`.
+**Unsure about a library**
+- Add `use context7` to your request, for example: `use context7, Jest: how to mock a module with a default export`.
 
-**Прототип, щоб перевірити ідею**
-- `/prototype` — одноразовий код, щоб відповісти на одне питання про інтерфейс або логіку. Не лишай його в основній гілці.
+**Prototype to test an idea**
+- `/prototype`: throwaway code that answers one question about the interface or logic. Do not leave it in your main branch.
 
-**Коли нічого з цього не треба**
-- Дрібна правка, перейменування, одна стрічка. Просто попроси Claude зробити. Скіли додають токени на кожну сесію, тому не запускай процес там, де він не потрібен.
+**When you do not need any of this**
+- Small edits, renames, one-line fixes: just ask Claude. Skills add tokens to every session, so do not run a full process for a tiny change.
 
-## 4. Де що лежить
+## 4. Where things live
 
-| Що | Де | Хто створює |
+| What | Where | Who creates it |
 |---|---|---|
-| Плагіни і їхні налаштування | `~/.claude/settings.json`, `~/.claude/plugins/` | `/plugin install` |
-| Правила для проєкту (мова, стек, команди) | `CLAUDE.md` у корені проєкту | `scripts/init-project.sh`, потім ти |
-| Опис продукту і стиль | `PRODUCT.md`, `DESIGN.md` у корені проєкту | `/impeccable init` |
-| Словник термінів і рішення | `GLOSSARY.md`, `docs/adr/` у проєкті | `/setup-matt-pocock-skills`, `/domain-modeling` |
+| Plugins and their settings | `~/.claude/settings.json`, `~/.claude/plugins/` | `/plugin install` |
+| Project rules (language, stack, commands) | `CLAUDE.md` in the project root | `scripts/init-project.sh`, then you |
+| Product and style notes | `PRODUCT.md`, `DESIGN.md` in the project root | `/impeccable init` |
+| Glossary and decisions | `GLOSSARY.md`, `docs/adr/` in the project | `/setup-matt-pocock-skills`, `/domain-modeling` |
 
-Нічого з плагінів не копіюється в проєкт. Вони працюють у всіх проєктах одразу.
+Nothing from the plugins is copied into your project. They work in all your projects at once.
 
-## 5. Керування
-
-```text
-/plugin                                  список і вимикачі
-claude plugin disable <name>@<market>    вимкнути без видалення
-claude plugin update <name>@<market>     оновити до останньої версії
-claude plugin uninstall <name>@<market>  видалити
-claude plugin details <name>@<market>    скільки токенів займає опис
-```
-
-Оновлення роби вибірково і перевіряй, що змінилось, бо плагіни запускають код.
-
-## 6. Відомі ризики
-
-- **impeccable** запускає бінарник на кожну правку файлу і завантажує його при першому запуску. Я його не перевіряв.
-- **ponytail** має хуки в кожній сесії й записує CSV на диск.
-- **context7** відправляє назви бібліотек і запити до зовнішнього сервісу. Не вставляй туди ключі, паролі чи приватний код.
-- Усі плагіни запускаються з твоїми правами. Ставити лише те, чому довіряєш.
-- Скіли не роблять код правильним. Запускай тести, читай diff, і якщо чогось не розумієш, попроси Claude пояснити.
-
-## 7. Файли в цьому репо
+## 5. Managing plugins
 
 ```text
-scripts/install-plugins.sh    встановлює всі шість плагінів однією командою
-scripts/init-project.sh       копіює шаблон CLAUDE.md у проєкт, не перезаписує
-templates/project/CLAUDE.md   шаблон правил для проєкту
-docs/COMMANDS.md              довідник усіх команд і скілів (таблиці)
-LICENSE                       MIT, тільки для файлів цього репо
-THIRD_PARTY_LICENSES.md       ліцензії плагінів, які ставить скрипт
+/plugin                                    list and toggle plugins
+claude plugin disable <name>@<market>      turn off without removing
+claude plugin update <name>@<market>       update to the latest version
+claude plugin uninstall <name>@<market>    remove
+claude plugin details <name>@<market>      how many tokens the descriptions use
 ```
 
-Повний довідник команд, що кожна робить і коли використовувати, — в [docs/COMMANDS.md](docs/COMMANDS.md).
+Update one plugin at a time and check what changed, because plugins run code.
 
-## Джерела і ліцензії
+## 6. Known risks
+
+- **impeccable** runs a binary on every file edit, and downloads it on first run. This setup has not reviewed that binary.
+- **ponytail** has hooks in every session and writes a CSV file to disk.
+- **context7** sends library names and your queries to an external service. Do not put keys, passwords, or private code in those queries.
+- Plugins run with your permissions. Install only what you trust.
+- Skills do not make code correct. Run the tests, read the diff, and ask Claude to explain anything you do not understand.
+
+## 7. Files in this repo
+
+```text
+scripts/install-plugins.sh    installs all six plugins in one command
+scripts/init-project.sh       copies the CLAUDE.md template into a project, never overwrites
+templates/project/CLAUDE.md   project rules template (English replies)
+docs/COMMANDS.md              reference of all commands and skills (tables)
+LICENSE                       MIT, for files in this repo only
+THIRD_PARTY_LICENSES.md       licenses of the plugins the script installs
+```
+
+## Sources and licenses
 
 - [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills), MIT
 - [pbakaus/impeccable](https://github.com/pbakaus/impeccable), Apache-2.0
@@ -138,4 +145,4 @@ THIRD_PARTY_LICENSES.md       ліцензії плагінів, які став
 - [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill), MIT
 - [upstash/context7](https://github.com/upstash/context7), Apache-2.0
 
-Файли цього репо — MIT ([LICENSE](LICENSE)). Повні тексти ліцензій плагінів — у [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+Files in this repo are MIT ([LICENSE](LICENSE)). Full license texts for the plugins are in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
